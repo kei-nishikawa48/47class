@@ -1,24 +1,52 @@
-import logo from './logo.svg';
-import './App.css';
-
-function App() {
+import Form from "./Form"
+import List from "./List"
+import { useState } from "react" //1
+const App = () => {
+  const [todos, setTodos] = useState([])
+  //2
+  // const todos=[
+  //   {
+  //     isDone:false,
+  //     content:"課題をする"
+  //   },
+  //   {
+  //     content:"洗濯をする"
+  //   },   
+  //   {
+  //     content:"電話をする"
+  //   },
+  // ]
+  // const [a,seta]=["aaaa","bbbb"]
+  // const {bb,kk}={kk:"aaaa",bb:"bbbb"}
+  // console.log(kk)
+  // console.log(bb)
+  // const array = [1, 2, 3, 4, 5, 6, 7]
+  // const Filter = array.filter(item => item !== 1)
+  // console.log(Filter)
+  // todoを消す関数
+  const deleteTodo = (id) => {
+    //引数で受け取ったidとtodoにあるidが一致した時それを消す
+    setTodos(todos.filter(todo => todo.id !== id))
+  }
+  const changeIsDone = (id) => {
+    //setTodos("特定のidを受け取った時そのidと一致するisDoneの値を変更する")
+    setTodos(todos.map((todo) => {
+      if (todo.id === id) {
+        return {
+          ...todo,
+          isDone: !todo.isDone,
+        }
+      } else {
+        return todo
+      }
+    }))
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <h1>TODO APP</h1>
+      <Form todos={todos} setTodos={setTodos} />
+      <List todos={todos} changeIsDone={changeIsDone} deleteTodo={deleteTodo} />
+    </>
   );
 }
 
